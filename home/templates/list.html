@@ -1,0 +1,70 @@
+{% extends "base.html" %}{% block title %} Login List {% endblock  %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <h2>Login List</h2>
+
+    <a class="btn btn-primary" href="{%url 'create'%}">Create User</a> 
+</div>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%if logins%}
+        {%for login in logins%}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{login.name}}</td>
+            <td>{{login.email}}</td>
+            <td>{{login.contact}}</td>
+            <td>
+                <a href={"%url 'update' login.pk%"1} class="btn btn-success btn-sm">Edit</a>
+                <button class="btn btn-danger btn-sm" data-bs-target="#deleteModal" data-bs-toggle="modal" data-id="{{login.pk}}">Delete</button>
+            </td>
+        </tr>
+        {%endfor%}{%else%}
+        <tr>
+            <td colspan="6" class="text-center">No user found...</td>
+        </tr>
+        {% endif %}
+    </tbody>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Conform Delete</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this User?
+      </div>
+      <div class="modal-footer">
+        <form method="POST" id="deleteForm">
+            {% csrf_token %}
+        <button type="submit" class="btn btn-danger" >Yes, Delete</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function(event){
+        const button = event.relatedTarget;
+        const contact = button.getAttribute('data-id');
+        const deleteForm = document.getElementById('deleteForm');
+        deleteForm.action = `/delete/${contact}/`;
+    })
+</script>
+</table>
+{% endblock %}
