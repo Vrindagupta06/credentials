@@ -25,10 +25,10 @@
             <td>{{login.email}}</td>
             <td>{{login.contact}}</td>
             <td>
-                <a href={"%url 'update' login.pk%"1} class="btn btn-success btn-sm">Edit</a>
+                <a href={%url 'update' login.pk%} class="btn btn-success btn-sm">Edit</a>
                 <button class="btn btn-danger btn-sm" data-bs-target="#deleteModal" data-bs-toggle="modal" data-id="{{login.pk}}">Delete</button>
             </td>
-        </tr>
+        </tr> #alert
         {%endfor%}{%else%}
         <tr>
             <td colspan="6" class="text-center">No user found...</td>
@@ -68,3 +68,5 @@
 </script>
 </table>
 {% endblock %}
+
+{% comment %} #session #cookies  {% endcomment %}

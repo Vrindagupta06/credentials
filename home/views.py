@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import Loginform
+from .forms import Loginform, FlavorForm
 from .models import Login
 # Create your views here.
 def create_login(request):
@@ -39,4 +39,3 @@ def delete_login(request, pk):
     if request.method == "POST":
         login.delete()
         return redirect('list')
-    
